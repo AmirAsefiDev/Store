@@ -28,10 +28,9 @@ namespace Store.Domain.Entities.Products
         public virtual Product Product { get; set; }
         public long ProductId { get; set; }
         public string Src { get; set; }
-
     }
 
-    public class Product_Features : BaseEntity
+    public class ProductFeatures : BaseEntity
     {
        public virtual Product Product { get; set; }
        public long ProductId { get; set; }
