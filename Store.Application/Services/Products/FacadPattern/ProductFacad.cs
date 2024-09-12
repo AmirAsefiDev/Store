@@ -1,6 +1,8 @@
-﻿using Store.Application.Interfaces.Contexts;
+﻿using Microsoft.AspNetCore.Hosting;
+using Store.Application.Interfaces.Contexts;
 using Store.Application.Interfaces.FacadPatterns;
 using Store.Application.Services.Products.Commands.AddNewCategory;
+using Store.Application.Services.Products.Commands.AddNewProduct;
 using Store.Application.Services.Products.Commands.DeleteParentCategory;
 using Store.Application.Services.Products.Commands.EditParentCategory;
 using Store.Application.Services.Products.Oueries.GetCategories;
@@ -15,9 +17,11 @@ namespace Store.Application.Services.Products.FacadPattern
     public class ProductFacad : IProductFacad
     {
         private readonly IDataBaseContext _context;
-        public ProductFacad(IDataBaseContext context)
+        private readonly IHostingEnvironment _environment;
+        public ProductFacad(IDataBaseContext context, IHostingEnvironment Environment)
         {
             _context = context;
+            _environment = Environment;
         }
         private AddNewCategoryService _addNewCategory;
         public AddNewCategoryService AddNewCategoryService
@@ -53,6 +57,14 @@ namespace Store.Application.Services.Products.FacadPattern
             get
             {
                 return  _editCategory = _editCategory ?? new EditCategory(_context);
+            }
+        }
+        private AddNewProductService _addNewProductService;
+        public AddNewProductService AddNewProductService
+        {
+            get
+            {
+                return _addNewProductService = _addNewProductService ?? new AddNewProductService(_context,_environment);
             }
         }
     }

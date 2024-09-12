@@ -1,5 +1,6 @@
 ﻿using Store.Application.Services.Products.Commands;
 using Store.Application.Services.Products.Commands.AddNewCategory;
+using Store.Application.Services.Products.Commands.AddNewProduct;
 using Store.Application.Services.Products.Commands.DeleteParentCategory;
 using Store.Application.Services.Products.Commands.EditParentCategory;
 using Store.Application.Services.Products.Oueries.GetCategories;
@@ -20,6 +21,7 @@ namespace Store.Application.Interfaces.FacadPatterns
         IDeleteCategory DeleteCategory { get; }
 
         IEditCategory EditCategory { get; }
+        AddNewProductService AddNewProductService { get; }
        
     }
 }
