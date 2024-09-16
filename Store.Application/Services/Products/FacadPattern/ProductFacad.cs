@@ -4,8 +4,13 @@ using Store.Application.Interfaces.FacadPatterns;
 using Store.Application.Services.Products.Commands.AddNewCategory;
 using Store.Application.Services.Products.Commands.AddNewProduct;
 using Store.Application.Services.Products.Commands.DeleteParentCategory;
+using Store.Application.Services.Products.Commands.DeleteProduct;
 using Store.Application.Services.Products.Commands.EditParentCategory;
-using Store.Application.Services.Products.Oueries.GetCategories;
+using Store.Application.Services.Products.Commands.EditProduct;
+using Store.Application.Services.Products.Queries.GetAllCategories;
+using Store.Application.Services.Products.Queries.GetCategories;
+using Store.Application.Services.Products.Queries.GetProductForAdmin;
+using Store.Application.Services.Products.Queries.GetProructDetailForAdmin;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +70,47 @@ namespace Store.Application.Services.Products.FacadPattern
             get
             {
                 return _addNewProductService = _addNewProductService ?? new AddNewProductService(_context,_environment);
+            }
+        }
+
+        private IGetAllCategoriesService _getAllCategoriesService;
+        public IGetAllCategoriesService GetAllCategoriesService
+        {
+            get
+            {
+                return _getAllCategoriesService = _getAllCategoriesService ?? new GetAllCategoriesService(_context);
+            }
+        }
+        private IGetProductForAdminService _getProductForAdminService;
+        public IGetProductForAdminService GetProductForAdminService
+        {
+            get
+            {
+                return _getProductForAdminService = _getProductForAdminService ?? new GetProductForAdminService(_context);
+            }
+        }
+        private IGetProductDetailForAdminService _getProductDetailForAdminService;
+        public IGetProductDetailForAdminService GetProductDetailForAdminService
+        {
+            get
+            {
+                return _getProductDetailForAdminService = _getProductDetailForAdminService ?? new GetProductDetailForAdminService(_context);
+            }
+        }
+        private IEditProductService _editProductService;
+        public IEditProductService EditProductService
+        {
+            get
+            {
+                return _editProductService = _editProductService ?? new EditProductService(_context);
+            }
+        }
+        private IDeleteProductService _deleteProductService;
+        public IDeleteProductService DeleteProductService
+        {
+            get
+            {
+                return _deleteProductService = _deleteProductService ?? new DeleteProductService(_context);
             }
         }
     }

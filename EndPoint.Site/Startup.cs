@@ -60,7 +60,7 @@ namespace EndPoint.Site
             //FacadeInject
             services.AddScoped<IProductFacad, ProductFacad>();
 
-            var connectionString = @"Data Source=.\Amir;Initial Catalog=Store_DB;Integrated Security=True;";
+            var connectionString = @"Data Source=.;Initial Catalog=Store_DB;Integrated Security=True;";
 
             //services.AddEntityFrameworkSqlServer().AddDbContext<DataBaseContext>(options => options.UseSqlServer(connectionString, b => b.MigrationsAssembly("EndPoint.Site")));
             services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connectionString));

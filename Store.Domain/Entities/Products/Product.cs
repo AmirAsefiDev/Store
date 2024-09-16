@@ -19,6 +19,7 @@ namespace Store.Domain.Entities.Products
 
         public virtual Category Category { get; set; }
         public long CategoryId { get; set; }
+
         public virtual List<ProductImage> ProductImage { get; set; }
         public virtual List<ProductFeatures> ProductFeatures { get; set; }
     }

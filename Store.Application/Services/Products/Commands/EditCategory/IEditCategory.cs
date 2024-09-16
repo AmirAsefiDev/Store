@@ -1,5 +1,5 @@
 ﻿using Store.Application.Interfaces.Contexts;
-using Store.Application.Services.Products.Oueries.GetCategories;
+using Store.Application.Services.Products.Queries.GetCategories;
 using Store.Common.Dto;
 using System;
 using System.Collections.Generic;
