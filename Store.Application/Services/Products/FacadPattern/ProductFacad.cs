@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Store.Application.Interfaces.Contexts;
-using Store.Application.Interfaces.FacadPatterns;
+using Store.Application.Interfaces.FacadPatterns.Product;
 using Store.Application.Services.Products.Commands.AddNewCategory;
 using Store.Application.Services.Products.Commands.AddNewProduct;
 using Store.Application.Services.Products.Commands.DeleteParentCategory;
 using Store.Application.Services.Products.Commands.DeleteProduct;
 using Store.Application.Services.Products.Commands.EditParentCategory;
 using Store.Application.Services.Products.Commands.EditProduct;
+using Store.Application.Services.Products.Queries.FetProductForSite;
 using Store.Application.Services.Products.Queries.GetAllCategories;
 using Store.Application.Services.Products.Queries.GetCategories;
+using Store.Application.Services.Products.Queries.GetProductDetailForSite;
 using Store.Application.Services.Products.Queries.GetProductForAdmin;
 using Store.Application.Services.Products.Queries.GetProructDetailForAdmin;
 using System;
@@ -111,6 +113,22 @@ namespace Store.Application.Services.Products.FacadPattern
             get
             {
                 return _deleteProductService = _deleteProductService ?? new DeleteProductService(_context);
+            }
+        }
+        private IGetFetProductForSiteService _getFetProductForSiteService;
+        public IGetFetProductForSiteService GetProductForSiteService 
+        {
+            get
+            {
+                return _getFetProductForSiteService = _getFetProductForSiteService ?? new GetFetProductForSiteService(_context); 
+            }
+        }
+        private IGetProductDetailForSiteService _getProductDetailForSiteService;
+        public IGetProductDetailForSiteService GetProductDetailForSiteService
+        {
+            get
+            {
+                return _getProductDetailForSiteService = _getProductDetailForSiteService ?? new GetProductDetailForSiteService(_context);
             }
         }
     }

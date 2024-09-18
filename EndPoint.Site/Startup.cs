@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Store.Application.Interfaces.Contexts;
-using Store.Application.Interfaces.FacadPatterns;
 using Store.Application.Services.Products.FacadPattern;
 using Store.Application.Services.Users.Commands.EditUser;
 using Store.Application.Services.Users.Commands.RegisterUser;
@@ -17,9 +16,12 @@ using Store.Application.Services.Users.Commands.UserLogin;
 using Store.Application.Services.Users.Commands.UserSatusChange;
 using Store.Application.Services.Users.Queries.GetRoles;
 using Store.Application.Services.Users.Queries.GetUsers;
-using Store.Application.Interfaces.FacadPatterns;
 using Store.Persistence.Contexts;
 using System;
+using Store.Application.Interfaces.FacadPatterns.Product;
+using System.Linq;
+using Store.Application.Services.Common.Queries.GetMenuItem;
+
 
 namespace EndPoint.Site
 {
@@ -59,6 +61,10 @@ namespace EndPoint.Site
 
             //FacadeInject
             services.AddScoped<IProductFacad, ProductFacad>();
+
+            //------------------------
+            services.AddScoped<IGetMenuItemService, GetMenuItemService>();
+
 
             var connectionString = @"Data Source=.;Initial Catalog=Store_DB;Integrated Security=True;";
 

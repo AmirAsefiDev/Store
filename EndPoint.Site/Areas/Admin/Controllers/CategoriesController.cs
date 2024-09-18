@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Application.Interfaces.FacadPatterns;
+using Store.Application.Interfaces.FacadPatterns.Product;
 using Store.Application.Services.Products.Commands.EditParentCategory;
 
 namespace EndPoint.Site.Areas.Admin.Controllers

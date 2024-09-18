@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Store.Application.Interfaces.FacadPatterns;
+using Store.Application.Interfaces.FacadPatterns.Product;
 using Store.Application.Services.Products.Commands.AddNewProduct;
 using Store.Application.Services.Products.Commands.EditProduct;
 using Store.Application.Services.Products.Queries.GetProductForAdmin;
