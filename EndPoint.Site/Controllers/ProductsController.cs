@@ -10,9 +10,9 @@ namespace EndPoint.Site.Controllers
         {
             _productFacad = ProductFacad;
         }
-        public IActionResult Index(int page=1,long? catId=null)
+        public IActionResult Index(string SearchKey,int page=1,long? catId=null)
         {
-            return View(_productFacad.GetProductForSiteService.Execute(page,catId).Data);
+            return View(_productFacad.GetProductForSiteService.Execute(SearchKey,page,catId).Data);
         }
         public IActionResult Detail(long Id)
         {

@@ -13,7 +13,7 @@ namespace Store.Application.Services.Products.Queries.FetProductForSite
 {
     public interface IGetFetProductForSiteService
     {
-        public ResultDto<ResultProductForSiteDto>Execute(int Page,long? categoryId);
+        public ResultDto<ResultProductForSiteDto>Execute(string SearchKey,int Page,long? categoryId);
     }
     public class GetFetProductForSiteService : IGetFetProductForSiteService
     {
@@ -22,7 +22,7 @@ namespace Store.Application.Services.Products.Queries.FetProductForSite
         {
             _context = context;
         }  
-        public ResultDto<ResultProductForSiteDto> Execute(int Page,long? CatId)
+        public ResultDto<ResultProductForSiteDto> Execute(string SearchKey, int Page, long? CatId)
         {
             int totalRow = 0;
             var productQuery = _context.Products
@@ -31,7 +31,11 @@ namespace Store.Application.Services.Products.Queries.FetProductForSite
             if(CatId != null)
             {
                 productQuery = productQuery.
-                    Where(p => p.CategoryId == CatId).AsQueryable();
+                    Where(p => p.CategoryId == CatId || p.Category.ParentCategoryId == CatId).AsQueryable();
+            }
+            if (!string.IsNullOrWhiteSpace(SearchKey))
+            {
+                productQuery = productQuery.Where(p => p.Name.Contains(SearchKey) || p.Brand.Contains(SearchKey)).AsQueryable();
             }
                 var product = productQuery.ToPaged(Page, 5 ,out totalRow);
             Random random = new Random();
