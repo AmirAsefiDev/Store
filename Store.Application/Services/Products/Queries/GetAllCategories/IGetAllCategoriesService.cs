@@ -27,7 +27,7 @@ namespace Store.Application.Services.Products.Queries.GetAllCategories
             var categories = _context
                 .Categories
                 .Include(p => p.ParentCategory)
-                .Where(p => p.ParentCategoryId != null)
+                .Where(p => p.ParentCategoryId != null && p.IsRemoved == false)
                 .ToList()
                 .Select(p => new AllCategoriesDto
                 {

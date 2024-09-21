@@ -15,6 +15,9 @@ namespace Store.Domain.Entities.Products
         public int Price { get; set; }
         public int Inventory { get; set; }
         public bool Displayed { get; set; }
+        public int ViewCount { get; set; }
+        public int Popularity { get; set; }
+
 
 
         public virtual Category Category { get; set; }

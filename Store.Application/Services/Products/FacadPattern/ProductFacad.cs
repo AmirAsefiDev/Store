@@ -115,12 +115,12 @@ namespace Store.Application.Services.Products.FacadPattern
                 return _deleteProductService = _deleteProductService ?? new DeleteProductService(_context);
             }
         }
-        private IGetFetProductForSiteService _getFetProductForSiteService;
-        public IGetFetProductForSiteService GetProductForSiteService 
+        private IGetProductForSiteService _getProductForSiteService;
+        public IGetProductForSiteService GetProductForSiteService 
         {
             get
             {
-                return _getFetProductForSiteService = _getFetProductForSiteService ?? new GetFetProductForSiteService(_context); 
+                return _getProductForSiteService = _getProductForSiteService ?? new GetProductForSiteService(_context); 
             }
         }
         private IGetProductDetailForSiteService _getProductDetailForSiteService;

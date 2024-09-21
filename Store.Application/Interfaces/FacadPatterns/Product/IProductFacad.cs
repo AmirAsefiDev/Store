@@ -52,7 +52,7 @@ namespace Store.Application.Interfaces.FacadPatterns.Product
         /// <summary>
         /// نمایش لیست محصولات در سایت
         /// </summary>
-        IGetFetProductForSiteService GetProductForSiteService { get; }
+        IGetProductForSiteService GetProductForSiteService { get; }
 
         /// <summary>
         /// نمایش اطلاعات محصول با شناسه محصول

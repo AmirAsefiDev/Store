@@ -22,6 +22,7 @@ using Store.Application.Interfaces.FacadPatterns.Product;
 using System.Linq;
 using Store.Application.Services.Common.Queries.GetMenuItem;
 using Store.Application.Services.Common.Queries.GetCategory;
+using Store.Application.Services.Common.Queries.GetSliaderMenu;
 
 
 namespace EndPoint.Site
@@ -66,6 +67,7 @@ namespace EndPoint.Site
             //------------------------
             services.AddScoped<IGetMenuItemService, GetMenuItemService>();
             services.AddScoped<IGetCategoryService, GetCategoryService>();
+            services.AddScoped<IGetSliaderMenu, GetSliaderMenu>();
 
 
             var connectionString = @"Data Source=.;Initial Catalog=Store_DB;Integrated Security=True;";

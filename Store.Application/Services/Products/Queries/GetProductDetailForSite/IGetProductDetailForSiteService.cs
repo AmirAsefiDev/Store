@@ -11,7 +11,7 @@ namespace Store.Application.Services.Products.Queries.GetProductDetailForSite
 {
     public interface IGetProductDetailForSiteService
     {
-        ResultDto<ProductDetailForSiteDto> Execute(long Id);
+        ResultDto<ProductDetailForSiteDto> Execute(long Id,bool IsPopular);
     }
     public class GetProductDetailForSiteService : IGetProductDetailForSiteService
     {
@@ -20,7 +20,7 @@ namespace Store.Application.Services.Products.Queries.GetProductDetailForSite
         {
             _context = context;
         }
-        public ResultDto<ProductDetailForSiteDto> Execute(long Id)
+        public ResultDto<ProductDetailForSiteDto> Execute(long Id,bool IsPopular)
         {
             var product = _context.Products
                 .Include(p => p.Category)
@@ -32,6 +32,13 @@ namespace Store.Application.Services.Products.Queries.GetProductDetailForSite
             {
                 throw new Exception("Product Not Found.....");
             }
+            if (IsPopular)
+            {  
+                product.Popularity++;
+            }
+
+            product.ViewCount++;
+            _context.SaveChanges();
             return new ResultDto<ProductDetailForSiteDto>
             {
                 Data = new ProductDetailForSiteDto

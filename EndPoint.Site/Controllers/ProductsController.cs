@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Store.Application.Interfaces.FacadPatterns.Product;
+using Store.Application.Services.Products.Queries.FetProductForSite;
 
 namespace EndPoint.Site.Controllers
 {
@@ -10,13 +11,13 @@ namespace EndPoint.Site.Controllers
         {
             _productFacad = ProductFacad;
         }
-        public IActionResult Index(string SearchKey,int page=1,long? catId=null)
+        public IActionResult Index(Ordering ordering, string SearchKey,long? CatId=null,int page=1,int pageSize=20)
         {
-            return View(_productFacad.GetProductForSiteService.Execute(SearchKey,page,catId).Data);
+            return View(_productFacad.GetProductForSiteService.Execute(ordering,SearchKey,CatId,page,pageSize).Data);
         }
-        public IActionResult Detail(long Id)
+        public IActionResult Detail(long Id, bool IsPopular)
         {
-            return View(_productFacad.GetProductDetailForSiteService.Execute(Id).Data);
+            return View(_productFacad.GetProductDetailForSiteService.Execute(Id,IsPopular).Data);
         }
     }
 }

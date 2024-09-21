@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "مشخصات محصول";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool IsPopular = false;
 }
 
 <div class="container-main">
@@ -28,13 +29,13 @@
                                     <div class="gallery-item">
                                         <div>
                                             <ul class="gallery-actions">
-                                                <li>
-                                                    <a href="#" class="btn-option add-product-wishes">
+                                                <li id="favoriteBtn">
+                                                    <a  class="btn-option add-product-wishes">
                                                         <i class="mdi mdi-heart-outline"></i>
                                                         <span>محبوب</span>
                                                     </a>
                                                 </li>
-                                                <li class="option-social">
+                                                <li  class="option-social">
                                                     <a href="#" class="btn-option btn-option-social" data-toggle="modal" data-target="#option-social">
                                                         <i class="mdi mdi-share"></i>
                                                         <span>اشتراک</span>
@@ -43,6 +44,7 @@
                                                     <div class="modal fade" id="option-social" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
+                                                                
                                                                 <div class="modal-header">
                                                                     <h5 class="modal-title" id="exampleModalCenterTitle">اشتراک گذاری</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -857,5 +859,91 @@
 {
     <script src="~/SiteTemplate/assets/js/vendor/lightgallery-all.js"></script>
     <script src="~/SiteTemplate/assets/js/vendor/jquery.ez-plus.js"></script>
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        // function ChangePopularity() 
+        // {
+        //      IsPopular = true;
+        //      $.ajax({
+        //          type: "POST",
+        //          url: "DetailFavorite",
+        // //          data: {Model.Id , IsPopular},
+        //          success: function (response) {
+        //              alert("محبوبیت با موفقیت تغییر یافت");
+        //          },
+        //          error: function (error) {
+        //              alert("خطا در ارسال: "+ error);
+        //          }
+        //      });
+        // }
+
+        // document.getElementById("favoriteBtn").addEventListener("click", function () {
+        //     swal.fire({
+        //         title: 'محصول محبوب',
+        //         text: "محصول شما به لیست محصول‌های محبوب اضافه شد",
+        //         icon: 'success',
+        //         confirmButtonColor: '#d33',
+        //         cancelButtonColor: '#7cacbe',
+        //         confirmButtonText: 'متوجه شدم',
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             var isPopular = true;  // مقدار را به درستی تنظیم می‌کنیم
+
+        //             $.ajax({
+        //                 type: "POST",
+        //                 url: "/Products/DetailFavorite",  // مسیر درست سرور را بگذارید
+        //                 data: { "IsPopular": isPopular },
+        //                 success: function (response) {
+        //                     alert("محبوبیت با موفقیت تغییر یافت");
+        //                 },
+        //                 error: function (error) {
+        //                     alert("خطا در ارسال: " + error);
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
+
+        // document.getElementById("favoriteBtn").addEventListener("click", function () {
+        //     console.log("کلیک شد!");
+        // });
+        document.getElementById("favoriteBtn").addEventListener("click", function () {
+                    // اینجا مقدار IsPopular تغییر می‌کند
+                    @IsPopular = true
+                    //var isPopular = IsPopular;
+                    var postData = {
+                        'Id': @Model.Id,
+                        'IsPopular': @IsPopular,
+                    };
+                    // اینجا اطلاعات به سرور ارسال می‌شود
+                    $.ajax({
+                        type: "POST",
+                        url: "Detail", // آدرس کنترلر و اکشن
+                        data: postData,
+                        success: function (response) {
+                            swal.fire({
+                                title: 'محصول محبوب',
+                                text: "محصول شما به لیست محصول‌های محبوب اضافه شد",
+                                icon: 'success',
+                                confirmButtonText: 'متوجه شدم',
+                            });
+                        },
+                        error: function (error) {
+                        swal.fire({
+                            title: 'محصول محبوب',
+                            text: "محصول شما به لیست محصول‌های محبوب اضافه نشد",
+                            icon: 'warning',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'متوجه شدم',
+                        });
+                        }
+                    });
+
+
+        });
+
+
+    </script>
 }
 

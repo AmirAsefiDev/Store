@@ -1,0 +1,35 @@
+﻿@using Store.Application.Services.Common.Queries.GetSliaderMenu
+@model List<SliaderMenuItemDto>
+
+@{
+    Layout = null;
+}
+
+<ul id="accordionMenu">
+
+    @foreach (var item in Model)
+    {
+        var collapseId = $"collapse-{item.CatId}";
+        <li id="nav-menu-item" class="menu-item nav-overlay">
+            <a href="#@collapseId" class="collapsed category-level-2" data-toggle="collapse" aria-expanded="false" aria-controls="@collapseId">
+                <i class="mdi mdi-chevron-down"></i>
+                @item.Name
+            </a>
+
+            @if (item.Child.Count() > 0)
+            {
+                <ul id="@collapseId" class="collapse sub-menu is-mega-menu-small" data-parent="#accordionMenu">
+                    @foreach (var itemChild in item.Child)
+                    {
+                        <li class="menu-mega-item menu-item-type-mega-menu item-small">
+                            <a href="~/products/index?CatId=@itemChild.CatId" class="mega-menu-link category-level-3">
+                                @itemChild.Name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            }
+        </li>
+    }
+
+</ul>
