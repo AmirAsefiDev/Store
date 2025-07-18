@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Store.Application.Services.Common.Queries.GetSliaderMenu;
+using Store.Application.Services.Common.Queries.GetSliderMenu;
 
 namespace EndPoint.Site.ViewComponents
 {
     public class SliderMenu : ViewComponent
     {
-        private readonly IGetSliaderMenu _getSliaderMenuItemService;
-        public SliderMenu(IGetSliaderMenu GetSliaderMenuItemService)
+        private readonly IGetSliderMenu _getSliaderMenuItemService;
+        public SliderMenu(IGetSliderMenu GetSliaderMenuItemService)
         {
             _getSliaderMenuItemService = GetSliaderMenuItemService;
         }

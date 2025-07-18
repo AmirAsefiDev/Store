@@ -335,6 +335,7 @@
             }
             else if (data.type === 'label') {
                 // adjust label position for rotation
+// ReSharper disable once Es6Feature
                 const dX = data.width / 2 + (30 - data.width)
                 data.element.attr({ x: data.element.attr('x') - dX })
             }

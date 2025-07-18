@@ -61,6 +61,7 @@
                 offset: 1,
                 'stop-color': 'rgba(41,123,249, 1)'
             });
+// ReSharper disable once Es6Feature
             const targetLineX = data.chartRect.x1 + (data.chartRect.width() - (data.chartRect.width() / data.bounds.step))
 
             data.svg.elem('line', {
@@ -203,6 +204,7 @@
                 offset: 1,
                 'stop-color': 'rgba(0, 75, 145, 1)'
             });
+// ReSharper disable once Es6Feature
             const targetLineX = data.chartRect.x1 + (data.chartRect.width() - (data.chartRect.width() / data.bounds.step))
 
             data.svg.elem('line', {

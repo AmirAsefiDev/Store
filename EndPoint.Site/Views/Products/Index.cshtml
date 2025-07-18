@@ -88,8 +88,8 @@
         <div class="pagination-product">
             <nav aria-label="Page navigation example">
                  <paging total-records="@Model.TotalRow"
-                         page-no="@pageNumber==0?1:pageNumber"
-                         page-size="@pageSize==0?20:pageSize"
+                         page-no="@(pageNumber==0?1:pageNumber)"
+                         page-size="@(pageSize==0?20:pageSize)"
                          show-prev-next="true"
                          show-total-pages="false"
                          show-total-records="false"

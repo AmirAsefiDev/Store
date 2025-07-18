@@ -1,0 +1,318 @@
+﻿@using Store.Application.Services.Common.Queries.GetSlider;
+@model List<SliderDto>;
+
+@* @using EndPoint.Site.Models.ViewModels.HomePages;
+@using System.Collections.ObjectModel
+@model HomePageViewModel; *@
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <!-- Zero configuration table -->
+        <section id="configuration">
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title-wrap bar-success">
+                                <h4 class="card-title">لیست اسلایدر ها</h4>
+                            </div>
+                        </div>
+                        <div class="card-body collapse show">
+                            <div class="card-block card-dashboard">
+                                <p class="card-text">اسلایدر های فروشگاه</p>
+                                <a href="~/admin/sliders/add" class="btn btn-success">افزودن اسلاید جدید</a>
+
+                                <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4">
+                                    <div class="col-sm-12">
+                                        <table class="table table-striped table-bordered zero-configuration dataTable" id="DataTables_Table_0" role="grid" aria-describedby="DataTables_Table_0_info">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="تصویر: activate to sort column descending" style="width: 222px;">تصویر</th>
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label="آدرس لینک: activate to sort column descending" style="width: 222px;">آدرس لینک</th>
+                                                    <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-sort="ascending" aria-label=": activate to sort column descending" style="width: 222px;"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr role="row" class="odd">
+                                                        <td class="sorting_1">@item.Src</td>
+                                                        <td>@item.Link</td>
+                                                        <td>
+                                                             <a class="btn btn-danger" onclick="DeleteSlider('@item.Id')"> حذف اسلایدر </a>
+                                                            <a class="btn btn-secondary" onclick="ShowModalEditSlider('@item.Id' , '/@item.Src.Replace("\\","/")' , '@item.Link')"> ویرایش اسلایدر </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+@section Scripts
+{
+
+    <link href="~/Sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <script src="~/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+
+        function DeleteSlider(SliderId) {
+            swal.fire({
+                title: 'حذف محصول',
+                text: "کاربر گرامی از حذف اسلایدر مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ، اسلایدر حذف شود',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+                    var postData = {
+                        'SliderId': SliderId,
+                    };
+
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "Delete",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            }
+                            else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                            console.log(request.responseText);
+                        }
+
+                    });
+
+                }
+            })
+        }
+
+        // function EditSlider() {
+
+        //     var Id = $("#Edit_Id").val();
+        //     var Src = $("#Edit_Src").val();
+        //     var Link = $("#Edit_Link").val();
+
+        //     var postData = {
+        //         'Id': Id,
+        //         'Src': Src,
+        //         'Link': Link,
+        //     };
+
+
+        //     $.ajax({
+        //         contentType: 'application/x-www-form-urlencoded',
+        //         dataType: 'json',
+        //         type: "POST",
+        //         url: "Edit",
+        //         data: postData,
+        //         success: function (data) {
+        //             if (data.isSuccess == true) {
+        //                 swal.fire(
+        //                     'موفق!',
+        //                     data.message,
+        //                     'success'
+        //                 ).then(function (isConfirm) {
+        //                     location.reload();
+        //                 });
+        //             }
+        //             else {
+        //                 swal.fire(
+        //                     'هشدار!',
+        //                     data.message,
+        //                     'warning'
+        //                 );
+        //             }
+        //         },
+        //         error: function (request, status, error) {
+        //             alert(request.responseText);
+        //         }
+        //     });
+
+        //     $('#EditSlider').modal('hide');
+
+        // }
+
+        // function EditSlider() {
+        //     var Id = $("#Edit_Id").val();
+        //     var Link = $("#Edit_Link").val();
+        //     //var Src = $("#Edit_Src")[0].files[0]; // گرفتن فایل انتخاب شده
+        //     var Src = $('#sliderPreview').attr('src', Src);
+
+        //     var formData = new FormData();
+        //     formData.append('Id', Id);
+        //     formData.append('Link', Link);
+        //     formData.append('#sliderPreview', Src); // افزودن فایل به FormData
+
+        //     $.ajax({
+        //         url: 'Edit',
+        //         type: 'POST',
+        //         data: formData,
+        //         processData: false, // اجازه ندهید jQuery داده‌ها را پردازش کند
+        //         contentType: false, // اجازه ندهید jQuery نوع محتوا را تنظیم کند
+        //         success: function (data) {
+        //             if (data.isSuccess == true) {
+        //                 swal.fire(
+        //                     'موفق!',
+        //                     data.message,
+        //                     'success'
+        //                 ).then(function () {
+        //                     location.reload();
+        //                 });
+        //             } else {
+        //                 swal.fire(
+        //                     'هشدار!',
+        //                     data.message,
+        //                     'warning'
+        //                 );
+        //             }
+        //         },
+        //         error: function (request, status, error) {
+        //             alert(request.responseText);
+        //         }
+        //     });
+
+        //     $('#EditSlider').modal('hide');
+        // }
+
+        function EditSlider() {
+            var fileInput = document.getElementById('Edit_Src');
+            var selectedFile = fileInput.files.length > 0 ? fileInput.files[0] : null;
+            var imageSrc = $('#Edit_DSrc').attr('src');
+
+            // ایجاد یک شیء FormData
+            var formData = new FormData();
+            formData.append('Id',$('#Edit_Id').val());
+            formData.append('Link',$('#Edit_Link').val());
+            // adding file to src for C#
+            if (selectedFile) {
+                formData.append('Src',selectedFile);
+            }
+            formData.append('DefaultSrc', imageSrc);
+
+            $.ajax({
+                url: '/admin/Sliders/Edit',  // URL سمت سرور که اطلاعات به آن ارسال می‌شود
+                type: 'POST',
+                data: formData,
+                contentType: false,  // بسیار مهم: برای ارسال فایل، contentType باید false باشد
+                processData: false,  // بسیار مهم: نباید داده‌ها را پردازش کند
+                success: function (response) {
+                    if (response.isSuccess) {
+                        swal.fire('موفق!', 'اسلایدر با موفقیت ویرایش شد', 'success')
+                            .then(() => location.reload());
+                    } else {
+                        swal.fire('خطا!', 'مشکلی رخ داد', 'error');
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log('Error:', request.responseText);
+                }
+            });
+        }
+
+
+        function ShowModalEditSlider(Id, Src ,Link) {
+
+            var baseUrl = window.location.origin;
+//            Src = Src.replace("\\",'-');
+//            if (Src.startsWith('/'))
+//                Src = '/' + Src;
+
+            var fullPath = baseUrl+ Src;
+
+            $('#Edit_Link').val(Link);
+            $('#currentImagePreview').attr('src', fullPath);
+            $('#Edit_Id').val(Id);
+
+            $('#EditSlider').modal('show');
+        }
+
+    </script>
+}
+
+@section Modals
+{
+    <!-- Modal Edit Slider -->
+    <div class="modal fade" id="EditSlider" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">ویرایش اسلایدر</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
+                        <fieldset class="form-group">
+
+                            <input type="hidden" id="Edit_Id" name="Edit_Id" />
+
+                            <label for="basicInput">تصویر و مسیر تصویر</label>
+                            <input type="file" class="form-control" id="Edit_Src" name="Edit_Src">
+
+                            <img id="currentImagePreview" style="width: 120px; height: 120px; margin: 10px auto;" src="" id="Edit_DSrc" alt="پیش نمایش تصویر" />
+                            <br/>
+                            <label for="basicInput">لینک</label>
+                            <input type="text" class="form-control" id="Edit_Link" name="Edit_Link">
+
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" data-dismiss="modal">بستن</a>
+                    <a class="btn btn-primary" onclick="EditSlider()">اعمال تغییرات</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form id="editForm" enctype="multipart/form-data">
+    
+        <input type="hidden" id="Edit_Id" name="Id" />
+        <label for="basicInput">لینک</label>
+        <input type="text" class="form-control" id="Edit_Link" name="Link">
+    
+        <label for="fileInput">تصویر اسلایدر</label>
+        <input type="file" class="form-control" id="Edit_Src" name="file">
+    
+        <img id="currentImagePreview" style="width: 120px; height: 120px;" src="" alt="پیش نمایش تصویر" />
+    
+        <button type="button" class="btn btn-primary" onclick="EditSlider()">ذخیره تغییرات</button>
+    </form>
+
+}

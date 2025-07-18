@@ -1,10 +1,6 @@
-﻿using Microsoft.VisualBasic;
+﻿using System.Collections.Generic;
 using Store.Domain.Entities.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Store.Domain.Entities.Orders;
 
 namespace Store.Domain.Entities.Users
 {
@@ -15,5 +11,6 @@ namespace Store.Domain.Entities.Users
         public string Password { get; set; }
         public bool IsActive { get; set; }
         public ICollection<UserInRole> UserInRoles { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

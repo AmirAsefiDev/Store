@@ -1,0 +1,43 @@
+﻿@using Store.Application.Services.Orders.GetUserOrder
+@model List<GetUserOrderDto>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>سفارشات شما</h1>
+<table style="border:dashed" class="table table-responsive table-active table-bordered">
+    <thead style="border:solid">
+        <tr>
+            <tr>شماره سفارش </tr>
+            <tr>وضعیت سفارش </tr>
+            <tr>شماره فاکتور </tr>
+            <tr>محصولات در این سفارش </tr>
+        </tr> 
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr style="border:solid">
+                <td>@order.OrderId</td>
+                <td>@order.OrderState</td>
+                <td>@order.RequestPayId</td>
+
+                <td>
+                    <table>
+                        @foreach (var orderDetail in order.OrderDetails)
+                        {
+                            <tr style="border:outset">
+                                <td>@orderDetail.ProductName</td>
+                                <td>@orderDetail.Price</td>
+                                <td>@orderDetail.Count</td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

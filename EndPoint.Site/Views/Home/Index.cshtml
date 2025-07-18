@@ -1,5 +1,10 @@
-﻿@{
+﻿@using EndPoint.Site.Models.ViewModels.HomePages;
+@using System.Collections.ObjectModel
+@using Store.Domain.Entities.HomePages
+@model HomePageViewModel;
+@{
     ViewData["Title"] = "Home Page";
+    int _sliderCount = 1;
 }
 
 
@@ -12,27 +17,34 @@
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                        @for(int i = 0; i < Model.Sliders.Count - 1;i++)
+                        {
+                            <li data-target="#carouselExampleIndicators" data-slide-to="@i"></li>
+                        }
+
+
                     </ol>
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="~/SiteTemplate/assets/images/slider-main/sm-1.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="~/SiteTemplate/assets/images/slider-main/sm-2.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="~/SiteTemplate/assets/images/slider-main/sm-3.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="~/SiteTemplate/assets/images/slider-main/sm-4.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="~/SiteTemplate/assets/images/slider-main/sm-5.jpg" class="d-block w-100" alt="...">
-                        </div>
+                        @foreach(var item in Model.Sliders)
+                        {
+                            if (_sliderCount == 1)
+                            {
+                                <div class="carousel-item active">
+                                    <a href="@item.Link">
+                                        <img src="~/@item.Src" class="d-block w-100" alt="...">
+                                    </a>
+                                </div>                                
+                            }else{
+                                <div class="carousel-item">
+                                    <a href="@item.Link">
+                                        <img src="~/@item.Src" class="d-block w-100" alt="...">
+                                    </a>
+                                </div>
+                            }
+                            _sliderCount++;
+
+                        }
+                      
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                         <span class="fa fa-angle-left" aria-hidden="true"></span>
@@ -48,14 +60,14 @@
         <!-- adplacement--------------------------->
         <div class="col-lg-4 col-md-4 col-xs-12 pl mt-1">
             <div class="adplacement-container-column">
-                <a href="#" class="adplacement-item">
+                <a href="@(Model.PageImages.Where(p=>p.ImageLocation == ImageLocation.L2 )?.FirstOrDefault()?.Link ?? "")" class="adplacement-item">
                     <div class="adplacement-sponsored-box">
-                        <img src="~/SiteTemplate/assets/images/adplacement/a-1.jpg">
+                        <img src="@(Model.PageImages.Where(p=>p.ImageLocation == ImageLocation.L2 )?.FirstOrDefault()?.Src ?? "")">
                     </div>
                 </a>
-                <a href="#" class="adplacement-item">
+                <a href="@(Model.PageImages.Where(p=>p.ImageLocation == ImageLocation.R3 )?.FirstOrDefault()?.Link ?? "")" class="adplacement-item">
                     <div class="adplacement-sponsored-box">
-                        <img src="~/SiteTemplate/assets/images/adplacement/a-2.jpg">
+                        <img src="@(Model.PageImages.Where(p=>p.ImageLocation == ImageLocation.R3 )?.FirstOrDefault()?.Src ?? "")">
                     </div>
                 </a>
             </div>
@@ -463,11 +475,11 @@
             <div class="col-12">
                 <a href="#" class="adplacement-item mb-4">
                     <div class="adplacement-sponsored_box">
-                        <img src="~/SiteTemplate/assets/images/adplacement/a-8.jpg">
+                        <img src="@(Model.PageImages.Where(p=>p.ImageLocation == ImageLocation.CenterFullScreen)?.FirstOrDefault()?.Src ?? "")">
                     </div>
-                </a>
+                 </a>
             </div>
-            <div class="col-6 col-lg-3 pr">
+            @*             <div class="col-6 col-lg-3 pr">
                 <a href="#" class="adplacement-item">
                     <div class="adplacement-sponsored_box">
                         <img src="~/SiteTemplate/assets/images/adplacement/a-4.jpg">
@@ -487,14 +499,18 @@
                         <img src="~/SiteTemplate/assets/images/adplacement/a-6.jpg">
                     </div>
                 </a>
-            </div>
-            <div class="col-6 col-lg-3 pr">
-                <a href="#" class="adplacement-item">
-                    <div class="adplacement-sponsored_box">
-                        <img src="~/SiteTemplate/assets/images/adplacement/a-7.jpg">
-                    </div>
-                </a>
-            </div>
+            </div> *@
+            @foreach (var item in @Model.PageImages.Where(p=>p.ImageLocation == ImageLocation.G1).ToList())
+            {
+                <div class="col-6 col-lg-3 pr">
+                    <a href="@item.Link" class="adplacement-item">
+                        <div class="adplacement-sponsored_box">
+                            <img src="@item.Src">
+                        </div>
+                    </a>
+                </div>
+            }
+
         </div>
     </div>
 </div>
@@ -512,23 +528,26 @@
                     <div class="product-carousel owl-carousel owl-theme owl-rtl owl-loaded owl-drag">
                         <div class="owl-stage-outer">
                             <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 2234px;">
-                                <div class="owl-item active" style="width: 309.083px; margin-left: 10px;">
-                                    <div class="item">
-                                        <a href="#" class="d-block hover-img-link">
-                                            <img src="~/SiteTemplate/assets/images/slider-product/camera-canon-4000D.jpg" class="img-fluid" alt="">
-                                        </a>
-                                        <h2 class="post-title">
-                                            <a href="#">
-                                                دوربین دیجیتال کانن مدل EOS 4000D به همراه لنز 18-55 میلی متر IS II
+                                @foreach (var item in Model.Cameras)
+                                {
+                                    <div class="owl-item active" style="width: 309.083px; margin-left: 10px;">
+                                        <div class="item">
+                                            <a href="/products/detail/@item.Id" class="d-block hover-img-link">
+                                                <img src="~/@item.ImageSrc" class="img-fluid" alt="">
                                             </a>
-                                        </h2>
-                                        <div class="price">
-                                            <del><span>۱۲,۰۰۰,۰۰<span>تومان</span></span></del>
-                                            <ins><span>۱۰,۵۰۰,۰۰۰<span>تومان</span></span></ins>
+                                            <h2 class="post-title">
+                                                <a href="#">
+                                                    @item.Title
+                                                </a>
+                                            </h2>
+                                            <div class="price">
+                                                <del><span>۱۲,۰۰۰,۰۰<span>تومان</span></span></del>
+                                                <ins><span>@item.Price<span>تومان</span></span></ins>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="owl-item active" style="width: 309.083px; margin-left: 10px;">
+                                }
+@*                                 <div class="owl-item active" style="width: 309.083px; margin-left: 10px;">
                                     <div class="item">
                                         <a href="#" class="d-block hover-img-link">
                                             <img src="~/SiteTemplate/assets/images/slider-product/camera-samsung.jpg" class="img-fluid" alt="">
@@ -591,7 +610,7 @@
                                             <ins><span>۶,۰۰۰,۰۰۰<span>تومان</span></span></ins>
                                         </div>
                                     </div>
-                                </div>
+                                </div> *@
                             </div>
                         </div>
                         <div class="owl-nav">
@@ -821,34 +840,23 @@
         <div class="container-fluid">
             <div class="row pr">
                 <div class="adplacement-container-row">
-                    <div class="col-6 col-lg-3 pr">
+@*                     <div class="col-6 col-lg-3 pr">
                         <a href="#" class="adplacement-item">
                             <div class="adplacement-sponsored_box">
                                 <img src="~/SiteTemplate/assets/images/adplacement/a-4.jpg">
                             </div>
                         </a>
-                    </div>
-                    <div class="col-6 col-lg-3 pr">
-                        <a href="#" class="adplacement-item">
-                            <div class="adplacement-sponsored_box">
-                                <img src="~/SiteTemplate/assets/images/adplacement/a-5.jpg">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-lg-3 pr">
-                        <a href="#" class="adplacement-item">
-                            <div class="adplacement-sponsored_box">
-                                <img src="~/SiteTemplate/assets/images/adplacement/a-6.jpg">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-6 col-lg-3 pr">
-                        <a href="#" class="adplacement-item">
-                            <div class="adplacement-sponsored_box">
-                                <img src="~/SiteTemplate/assets/images/adplacement/a-7.jpg">
-                            </div>
-                        </a>
-                    </div>
+                    </div> *@
+                    @foreach (var item in @Model.PageImages.Where(p=>p.ImageLocation == ImageLocation.G2).ToList())
+                    {
+                        <div class="col-6 col-lg-3 pr">
+                            <a href="@item.Link" class="adplacement-item">
+                                <div class="adplacement-sponsored_box">
+                                    <img src="@item.Src">
+                                </div>
+                            </a>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

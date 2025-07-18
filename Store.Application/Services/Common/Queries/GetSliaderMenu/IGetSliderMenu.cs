@@ -8,47 +8,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.Application.Services.Common.Queries.GetSliaderMenu
+namespace Store.Application.Services.Common.Queries.GetSliderMenu
 {
-    public interface IGetSliaderMenu
+    public interface IGetSliderMenu
     {
-        ResultDto<List<SliaderMenuItemDto>> Execute();
+        ResultDto<List<SliderMenuItemDto>> Execute();
     }
-    public class GetSliaderMenu : IGetSliaderMenu
+    public class GetSliderMenu : IGetSliderMenu
     {
         private readonly IDataBaseContext _context;
-        public GetSliaderMenu(IDataBaseContext context)
+        public GetSliderMenu(IDataBaseContext context)
         {
             _context = context;
         }
-        public ResultDto<List<SliaderMenuItemDto>> Execute()
+        public ResultDto<List<SliderMenuItemDto>> Execute()
         {
             var category = _context.Categories
                 .Include(p => p.SubCategories)
                 .Where(p => p.ParentCategoryId == null)
                 .ToList()
-                .Select(p => new SliaderMenuItemDto
+                .Select(p => new SliderMenuItemDto
                 {
                     CatId = p.Id,
                     Name = p.Name,
                     Child = p.SubCategories.ToList()
-                        .Select(child => new SliaderMenuItemDto
+                        .Select(child => new SliderMenuItemDto
                         {
                             CatId = child.Id,
                             Name = child.Name,
                         }).ToList(),
                 }).ToList();
-            return new ResultDto<List<SliaderMenuItemDto>>()
+            return new ResultDto<List<SliderMenuItemDto>>()
             {
                 Data = category,
                 IsSuccess = true,
             };
         }
     }
-    public class SliaderMenuItemDto
+    public class SliderMenuItemDto
     {
         public long CatId { get; set; }
         public string Name { get; set; }
-        public List<SliaderMenuItemDto> Child { get; set; }
+        public List<SliderMenuItemDto> Child { get; set; }
     }
 }

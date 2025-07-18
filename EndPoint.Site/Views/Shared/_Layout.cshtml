@@ -64,7 +64,7 @@
                                                             <a href="#" class="account-link">تنظیمات</a>
                                                         </li>
                                                         <li class="account-item">
-                                                            <a href="#" class="account-link">خروج</a>
+                                                            <a href="../Authentication/signout" class="account-link">خروج</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -107,8 +107,8 @@
                                             تماس با ما
                                         </a>
                                     </li>
-
-                                    <div class="divider-space-card d-block">
+                                    @await Component.InvokeAsync("Cart")
+                                    @* <div class="divider-space-card d-block">
                                         <div class="header-cart-basket">
                                             <a href="#" class="cart-basket-box">
                                                 <span class="icon-cart">
@@ -181,7 +181,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> *@
                                 </ul>
                             </div>
                         </div>

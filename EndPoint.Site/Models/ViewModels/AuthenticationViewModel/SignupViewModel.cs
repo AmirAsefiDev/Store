@@ -1,4 +1,4 @@
-﻿namespace EndPoint.Site.Models.ViewModels
+﻿namespace EndPoint.Site.Models.ViewModels.AuthenticationViewModel
 {
     public class SignupViewModel
     {

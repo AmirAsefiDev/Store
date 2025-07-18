@@ -31,13 +31,7 @@ namespace Store.Application.Services.Products.FacadPattern
             _environment = Environment;
         }
         private AddNewCategoryService _addNewCategory;
-        public AddNewCategoryService AddNewCategoryService
-        {
-            get
-            {
-                return _addNewCategory = _addNewCategory ?? new AddNewCategoryService(_context);
-            }
-        }
+        public AddNewCategoryService AddNewCategoryService => _addNewCategory = _addNewCategory ?? new AddNewCategoryService(_context);
 
         private IGetCategoryService _getCategoryService;
         public IGetCategoryService GetCategoryService
@@ -47,9 +41,8 @@ namespace Store.Application.Services.Products.FacadPattern
                 return _getCategoryService = _getCategoryService ?? new GetCategoryService(_context);
             }
         }
+
         private IDeleteCategory _deleteCategory;
-
-
         public IDeleteCategory DeleteCategory
         {
             get

@@ -1,4 +1,4 @@
-﻿
+﻿@using EndPoint.Site.Utilities;
 @{
     Layout = null;
 }
@@ -52,36 +52,67 @@
                             <a href="#"><i class="icon-home"></i><span data-i18n="" class="menu-title">داشبورد</span><span class="tag badge badge-pill badge-danger mt-1">2</span></a>
                         </li>
 
+                        @if (ClaimUtility.GetRoles(User).Where(u => u == "Admin").Any())
+                        {
+                            <li class="has-sub nav-item">
+                                <a href="#"><i class="icon-users"></i><span data-i18n="" class="menu-title">مدیریت کاربران</span></a>
+                                <ul class="menu-content">
+                                    <li class="active">
+                                        <a href="~/admin/users/index" class="menu-item">لیست کاربران</a>
+                                    </li>
+                                    <li>
+                                        <a href="~/admin/users/Create" class="menu-item">ثبت نام کاربر جدید *</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
                         <li class="has-sub nav-item">
-                            <a href="#"><i class="icon-users"></i><span data-i18n="" class="menu-title">مدیریت کاربران</span></a>
+                            <a href="#"><i class="icon-users"></i><span data-i18n="" class="menu-title">مدیریت سفارشات</span></a>
                             <ul class="menu-content">
                                 <li class="active">
-                                    <a href="~/admin/users/index" class="menu-item">لیست کاربران</a>
+                                    <a href="~/admin/order/index?orderstate=Processing" class="menu-item"> در حال پردازش</a>
                                 </li>
                                 <li>
-                                    <a href="~/admin/users/Create" class="menu-item">ثبت نام کاربر جدید *</a>
+                                    <a href="~/admin/order/index?orderstate=Canceled" class="menu-item">لغو شده ها</a>
+                                </li>
+                                <li>
+                                    <a href="~/admin/order/index?orderstate=Delivered" class="menu-item">تحویل شده ها</a>
                                 </li>
                             </ul>
                         </li>
 
                         <li class="has-sub nav-item">
-                            <a href="#"><i class="icon-users"></i><span data-i18n="" class="menu-title">مدیریت دسته بندی </span></a>
+                            <a href="#"><i class="icon-users"></i><span data-i18n="" class="menu-title">مدیریت فاکتور ها</span></a>
                             <ul class="menu-content">
-                                <li class="has-sub nav-item">
-                                    <ul class="menu-content">
-                                        <li class="active">
-                                            <a href="~/admin/categories/" class="menu-item">دسته بندی ها</a>
-                                        </li>
-                                        <li>
-                                            <a href="~/admin/categories/addnewcategory" class="menu-item">افزودن دسته بندی جدید *</a>
-                                        </li>
-                                    </ul>
+                                <li class="active">
+                                    <a href="~/admin/requestPay/index" class="menu-item">لیست فاکتور ها</a>
                                 </li>
                             </ul>
                         </li>
+                        
+                        @if (ClaimUtility.GetRoles(User).Where(u => u == "Operator").Any())
+                        {
+                            <li class="has-sub nav-item">
+                                <a href="#"><i class="icon-grid"></i><span data-i18n="" class="menu-title">مدیریت دسته بندی </span></a>
+                                <ul class="menu-content">
+                                    <li class="has-sub nav-item">
+                                        <ul class="menu-content">
+                                            <li class="active">
+                                                <a href="~/admin/categories/" class="menu-item">دسته بندی ها</a>
+                                            </li>
+                                            <li>
+                                                <a href="~/admin/categories/addnewcategory" class="menu-item">افزودن دسته بندی جدید *</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+
 
                         <li class="has-sub nav-item">
-                            <a href="#"><i class="icon-users"></i><span data-i18n="" class="menu-title"> مدیریت محصولات </span></a>
+                            <a href="#"><i class="icon-crop"></i><span data-i18n="" class="menu-title"> مدیریت محصولات </span></a>
                             <ul class="menu-content">
                                 <li class="has-sub nav-item">
                                     <ul class="menu-content">
@@ -90,6 +121,21 @@
                                         </li>
                                         <li>
                                             <a href="~/admin/products/addnewproduct" class="menu-item">محصول جدید *</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-sub nav-item">
+                            <a href="#"><i class="icon-picture"></i><span data-i18n="" class="menu-title"> مدیریت اسلاید ها </span></a>
+                            <ul class="menu-content">
+                                <li class="has-sub nav-item">
+                                    <ul class="menu-content">
+                                        <li class="active">
+                                            <a href="~/admin/sliders/index" class="menu-item">اسلاید ها</a>
+                                        </li>
+                                        <li>
+                                            <a href="~/admin/sliders/add" class="menu-item">اسلاید جدید *</a>
                                         </li>
                                     </ul>
                                 </li>

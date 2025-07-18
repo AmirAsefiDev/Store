@@ -1,26 +1,41 @@
-﻿using EndPoint.Site.Models;
+﻿using System.Diagnostics;
+using EndPoint.Site.Models;
+using EndPoint.Site.Models.ViewModels.HomePages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+using Store.Application.Interfaces.FacadPatterns.Product;
+using Store.Application.Services.Common.Queries.GetSlider;
+using Store.Application.Services.HomePages.GetHomePageImages;
+using Store.Application.Services.Products.Queries.FetProductForSite;
 
 namespace EndPoint.Site.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IGetHomePageImagesService _getHomePageImagesService;
+        private readonly IGetSliderService _getSliderService;
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductFacad _productFacad;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IGetSliderService GetSliderService,
+            IGetHomePageImagesService getHomePageImagesService, IProductFacad productFacad)
         {
             _logger = logger;
+            _getSliderService = GetSliderService;
+            _getHomePageImagesService = getHomePageImagesService;
+            _productFacad = productFacad;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var homePage = new HomePageViewModel
+            {
+                Sliders = _getSliderService.Execute().Data,
+                PageImages = _getHomePageImagesService.Execute().Data,
+                Cameras = _productFacad.GetProductForSiteService.Execute(Ordering.theNewest, null, 20, 1, 6)
+                    .Data.Products
+            };
+            return View(homePage);
         }
 
         public IActionResult Privacy()
